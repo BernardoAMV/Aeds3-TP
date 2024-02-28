@@ -20,8 +20,14 @@ public class Musica{
         this.regiao = regiao;
         this.titulo = titulo;
         MusicaService temp = new MusicaService("DB/teste.db");
+
         temp.raf.seek(0);
-        this.id = temp.raf.readInt() + 1;
+        if(temp.file.length() > 0)
+            this.id = temp.raf.readInt() + 1;
+        else
+            this.id = 0;
+
+        temp.raf.seek(0);
         temp.raf.writeInt(this.id);
         // aqui eu estou formatando a estrutura da data, como eu quero que ela apareca. EX: 2017-12-31
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");

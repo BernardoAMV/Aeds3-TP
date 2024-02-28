@@ -1,9 +1,4 @@
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.RandomAccessFile;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
+import java.io.*;
 import java.lang.instrument.ClassDefinition;
 import java.lang.instrument.ClassFileTransformer;
 import java.lang.instrument.UnmodifiableClassException;
@@ -19,6 +14,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.jar.JarFile;
+import java.util.Scanner;
 
 public class MusicaService {
 
@@ -51,8 +47,19 @@ public class MusicaService {
         raf.write(substring);
     }
 
-   protected int getObjectSize(Musica musica){
-        return 4+4+4+8+musica.getNome().getBytes().length+musica.getTitulo().getBytes().length+3;
+   protected int getObjectSize(Musica musica) throws UnsupportedEncodingException {
+        /* Aqui nos criamos a funcao que retorna o tamanho do arquivo:
+        4 bytes do id
+        4 bytes do rank
+        4 bytes das streams
+        e o tamanho das strings nome(artistas) e titulo da musica que sao variaveis
+        ao pegar o tamanho do array de bytes retornado da funcao "getBytes()" ele retorna o
+        numero de bytes da string
+        3 bytes da string fixa(regiao)
+        4 bytes dos shorts indicando o tamanho das strings variaveis
+        e 4 bytes
+        */
+        return 4+4+4+8+musica.getNome().getBytes("UTF-8").length+musica.getTitulo().getBytes("UTF-8").length+3+4+4;
 
     }
 
@@ -75,7 +82,7 @@ public class MusicaService {
     }
     protected void readAll() throws IOException {
         long pos = 4;
-        for(int i = 0; i < 20; i++){
+        for(int i = 0; i < 21; i++){
            System.out.println(toString(readFromFile(pos)));
             pos = raf.getFilePointer();
         }
@@ -143,15 +150,90 @@ public class MusicaService {
 
 
    public String toString(Musica musica){
-        return "\nID: " + musica.getId() +
-                "\nNome: "+musica.getNome()+
-                "\nTitulo:"+musica.getTitulo()+
-                "\nRegiao: "+musica.getRegiao() +
-                "\nData: "+ musica.getData() +
-                "\nRank: "+musica.getRank() +
-                "\nStreams: "+musica.getStreams();
+        if(musica != null) {
+            return "\nID: " + musica.getId() +
+                    "\nNome: " + musica.getNome() +
+                    "\nTitulo:" + musica.getTitulo() +
+                    "\nRegiao: " + musica.getRegiao() +
+                    "\nData: " + musica.getData() +
+                    "\nRank: " + musica.getRank() +
+                    "\nStreams: " + musica.getStreams();
+        }else {
+            return null;
+        }
 
     }
+
+
+    protected Musica Read(int id, long pos) throws IOException {
+        raf.seek(pos);
+        if(raf.getFilePointer() < raf.length()){
+        if(raf.readBoolean()){
+            long actualPos = raf.getFilePointer();
+            int size = raf.readInt();
+            if(id == raf.readInt()){
+                return readFromFile(pos);
+            }
+            else{
+                raf.seek(actualPos + size);
+                return Read(id,raf.getFilePointer());
+            }
+        }else {
+            raf.seek(raf.getFilePointer() + raf.readInt());
+            return Read(id, raf.getFilePointer());
+        }
+        }else
+            return null;
+
+
+
+    }
+    public boolean createMusica(String fileName) throws IOException{
+
+
+        Scanner scanner = new Scanner(System.in);
+        boolean resp = true;
+        String nome, titulo, regiao, data;
+        int  rank, streams;
+
+        System.out.println("------- CRIAR MUSICA\n Digite o nome da musica: ");
+        nome = scanner.nextLine();
+        System.out.println("Digite o titulo da musica: ");
+        titulo = scanner.nextLine();
+        System.out.println("Digite a regiao da musica: ");
+        regiao = scanner.nextLine();
+        System.out.println("Digite a data da musica: ");
+        data = scanner.nextLine();
+        System.out.println("Digite o rank da musica: ");
+        rank = scanner.nextInt();
+        System.out.println("Digite quantas streams tem a musica: ");
+        streams = scanner.nextInt();
+
+        /*nome = titulo = regiao = "aaa";
+        data = "0000-00-00";
+        rank = streams = 1;
+        */
+
+
+        scanner.close();
+
+        try
+        {
+            MusicaService tmpService = new MusicaService(fileName);
+            Musica tmp = new Musica(rank, streams, nome, data, regiao, titulo);
+
+            writeInFile(raf.length(), tmp);
+        }
+        catch (Exception e)
+        {
+            System.out.println("falha ao criar musica!");
+            resp = false;
+        }
+
+
+        return resp;
+    }
+
 
 
 
