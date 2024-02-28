@@ -10,7 +10,7 @@ public class main {
 
     public static void main(String[] args) throws IOException, ParseException {
 
-        MusicaService serviceDB = new MusicaService("DB/teste.db");
+        MusicaService serviceDB = new MusicaService("db/teste.db");
 
         MusicaService serviceCSV = new MusicaService("DB/csv_teste.csv");
         serviceCSV.raf.readLine();
@@ -22,6 +22,7 @@ public class main {
             posBD = serviceDB.raf.getFilePointer();
         }
         serviceDB.raf.seek(0);
+        System.out.println("ULTIMO ID ---->");
         System.out.println(serviceDB.raf.readInt());
 
         serviceDB.readAll();
