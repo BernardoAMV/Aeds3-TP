@@ -16,7 +16,7 @@ public class main {
         serviceCSV.raf.readLine();
         long posCSV = serviceCSV.raf.getFilePointer();
         long posBD = 4;
-  /*for(int i = 0; i < 20; i++){
+ /* for(int i = 0; i < 20; i++){
             serviceDB.writeInFile(posBD,serviceCSV.readFromCSV(posCSV)) ;
             posCSV = serviceCSV.raf.getFilePointer();
             posBD = serviceDB.raf.getFilePointer();
@@ -25,11 +25,11 @@ public class main {
         System.out.println("ULTIMO ID ---->");
         System.out.println(serviceDB.raf.readInt());
 
-      //serviceDB.readAll();*/
+      serviceDB.readAll();*/
 
   //System.out.println(serviceDB.toString(serviceDB.Read(4, 4)));
-      serviceDB.createMusica("DB/teste.db");
-        serviceDB.readAll();
+      //serviceDB.createMusica("DB/teste.db");
+      serviceDB.readAll();
 
 
 
