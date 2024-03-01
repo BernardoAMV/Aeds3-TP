@@ -66,29 +66,37 @@ public class MusicaService {
     protected Musica readFromFile(long pos) throws IOException {
 
         raf.seek(pos);
-        Musica temp = new Musica();
-        raf.readByte();
-        raf.readInt();
-        temp.setId(raf.readInt());
-        temp.setTitulo(readString(raf.getFilePointer()));
-        temp.setNome(readString(raf.getFilePointer()));
-        temp.setData(Date.from(Instant.ofEpochMilli(raf.readLong())));
-        temp.setRank(raf.readInt());
-        temp.setStreams(raf.readInt());
-        temp.setRegiao(byteArrayToString(raf.getFilePointer()));
-
-
-        return temp;
-    }
-    protected void readAll() throws IOException {
-        long pos = 4;
-        for(int i = 0; i < 21; i++){
-           System.out.println(toString(readFromFile(pos)));
-            pos = raf.getFilePointer();
+            Musica temp = new Musica(true);
+            raf.readBoolean();
+            raf.readInt();
+            temp.setId(raf.readInt());
+            temp.setTitulo(readString(raf.getFilePointer()));
+            temp.setNome(readString(raf.getFilePointer()));
+            temp.setData(Date.from(Instant.ofEpochMilli(raf.readLong())));
+            temp.setRank(raf.readInt());
+            temp.setStreams(raf.readInt());
+            temp.setRegiao(byteArrayToString(raf.getFilePointer()));
+            return temp;
         }
 
 
+
+    protected void readAll() throws IOException {
+        long pos = 4;
+        raf.seek(pos);
+        while(pos < raf.length()) {
+            boolean resp = raf.readBoolean();
+            if(resp) {
+                System.out.println(toString(readFromFile(pos)));
+                raf.seek(raf.getFilePointer());
+                pos = raf.getFilePointer();
+            } else{
+                raf.seek(raf.getFilePointer() + raf.readInt());
+                pos = raf.getFilePointer();
+            }
+        }
     }
+
 
 
 
@@ -163,9 +171,11 @@ public class MusicaService {
         }
 
     }
+    protected Musica Read(int id) throws IOException {
+        return Read(id, 4);
+    }
 
-
-    protected Musica Read(int id, long pos) throws IOException {
+    private Musica Read(int id, long pos) throws IOException {
         raf.seek(pos);
         if(raf.getFilePointer() < raf.length()){
         if(raf.readBoolean()){
@@ -184,9 +194,25 @@ public class MusicaService {
         }
         }else
             return null;
-
-
-
+    }
+    protected void deleteFromFile(int id) throws IOException {
+        raf.seek(4);
+        long pos = raf.getFilePointer(); // posicao da lapide
+        boolean stop = true; // parada do while, achou e deletou o registro alvo, parou o loop
+        while(pos < raf.length() && stop){ // enquanto o arquivo nao acabar
+            if(raf.readBoolean()) {
+                long posTam = raf.getFilePointer();
+                int tam = raf.readInt();// lendo o tamanho do registro
+                if (raf.readInt() == id) {
+                    raf.seek(pos);
+                    raf.writeBoolean(false);
+                    stop = false;
+                } else {
+                    raf.seek(posTam + tam);
+                    pos = raf.getFilePointer();
+                }
+            }
+        }
     }
     public boolean createMusica(String fileName) throws IOException{
 
@@ -222,6 +248,7 @@ public class MusicaService {
             MusicaService tmpService = new MusicaService(fileName);
             Musica tmp = new Musica(rank, streams, nome, data, regiao, titulo);
 
+
             writeInFile(raf.length(), tmp);
         }
         catch (Exception e)
@@ -233,6 +260,8 @@ public class MusicaService {
 
         return resp;
     }
+
+
 
 
 

@@ -25,7 +25,7 @@ public class Musica{
         if(temp.file.length() > 0)
             this.id = temp.raf.readInt() + 1;
         else
-            this.id = 0;
+            this.id = 1;
 
         temp.raf.seek(0);
         temp.raf.writeInt(this.id);
@@ -41,6 +41,26 @@ public class Musica{
         }
         temp = null;
     }
+    public Musica() throws IOException {
+
+        MusicaService temp = new MusicaService("DB/teste.db");
+
+        temp.raf.seek(0);
+        if(temp.file.length() > 0)
+            this.id = temp.raf.readInt() + 1;
+        else
+            this.id = 1;
+
+        temp.raf.seek(0);
+        temp.raf.writeInt(this.id);
+        this.nome ="";
+        this.regiao = "";
+        this.streams = 0;
+        data = new Date();
+    }
+
+    public Musica(boolean vazio){}
+
     // getters e setters
 
 
@@ -106,22 +126,6 @@ public class Musica{
         this.regiao = regiao;
     }
 
-    public Musica() throws IOException {
 
-        MusicaService temp = new MusicaService("DB/teste.db");
-
-        temp.raf.seek(0);
-        if(temp.file.length() > 0)
-            this.id = temp.raf.readInt() + 1;
-        else
-            this.id = 0;
-
-        temp.raf.seek(0);
-        temp.raf.writeInt(this.id);
-        this.nome ="";
-        this.regiao = "";
-        this.streams = 0;
-        data = new Date();
-    }
 
 }
