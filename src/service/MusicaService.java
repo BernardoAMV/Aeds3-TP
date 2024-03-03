@@ -234,7 +234,7 @@ public class MusicaService {
         nome = scanner.nextLine();
         System.out.println("Digite o titulo da musica: ");
         titulo = scanner.nextLine();
-        System.out.println("Digite a regiao da musica: ");
+        System.out.println("Digite a regiao da musica(min 3 caracteres): ");
         regiao = scanner.nextLine();
         System.out.println("Digite a data da musica(Ex: 1995-12-25): ");
         data = scanner.nextLine();
@@ -268,9 +268,9 @@ public class MusicaService {
         nome = scanner.nextLine();
         System.out.println("Digite o titulo da musica: ");
         titulo = scanner.nextLine();
-        System.out.println("Digite a regiao da musica: ");
+        System.out.println("Digite a regiao da musica(min 3 caracteres): ");
         regiao = scanner.nextLine();
-        System.out.println("Digite a data da musica: ");
+        System.out.println("Digite a data da musica(Ex: 1995-12-25): ");
         data = scanner.nextLine();
         System.out.println("Digite o rank da musica: ");
         rank = scanner.nextInt();

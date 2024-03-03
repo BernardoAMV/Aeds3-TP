@@ -4,16 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1bfe9e50-a0c8-4876-9a31-67f108340cae" name="Changes" comment="correcoes">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DB/csv_teste_tratado**.csv" beforeDir="false" afterPath="$PROJECT_DIR$/DB/csv_teste_tratado.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/output/production/Aeds3 - TP/Musica.class" beforeDir="false" afterPath="$PROJECT_DIR$/output/production/Aeds3 - TP/Musica.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/output/production/Aeds3 - TP/MusicaService.class" beforeDir="false" afterPath="$PROJECT_DIR$/output/production/Aeds3 - TP/MusicaService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/output/production/Aeds3 - TP/main.class" beforeDir="false" afterPath="$PROJECT_DIR$/output/production/Aeds3 - TP/main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/Musica.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Musica.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/service/MusicaService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/MusicaService.java" afterDir="false" />
-    </list>
+    <list default="true" id="1bfe9e50-a0c8-4876-9a31-67f108340cae" name="Changes" comment="correcoes" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -136,7 +127,7 @@
       <workItem from="1709323000627" duration="3109000" />
       <workItem from="1709389243656" duration="2587000" />
       <workItem from="1709400727628" duration="20783000" />
-      <workItem from="1709470562131" duration="6784000" />
+      <workItem from="1709470562131" duration="7439000" />
     </task>
     <task id="LOCAL-00001" summary="adicionando base de dados binario">
       <option name="closed" value="true" />
