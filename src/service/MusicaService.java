@@ -1,19 +1,8 @@
 import java.io.*;
-import java.lang.instrument.ClassDefinition;
-import java.lang.instrument.ClassFileTransformer;
-import java.lang.instrument.UnmodifiableClassException;
-import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
-import java.security.KeyStore;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.Date;
-import java.lang.instrument.Instrumentation;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.jar.JarFile;
 import java.util.Scanner;
 
 public class MusicaService {
@@ -84,15 +73,16 @@ public class MusicaService {
     protected void readAll() throws IOException {
         long pos = 4;
         raf.seek(pos);
-        while(pos < raf.length()) {
+        while(raf.getFilePointer() < raf.length()) {
+            pos = raf.getFilePointer();
             boolean resp = raf.readBoolean();
+            long tamPos = raf.getFilePointer();
+            int tam = raf.readInt();
             if(resp) {
                 System.out.println(toString(readFromFile(pos)));
-                raf.seek(raf.getFilePointer());
-                pos = raf.getFilePointer();
+                raf.seek(tam + tamPos);
             } else{
-                raf.seek(raf.getFilePointer() + raf.readInt());
-                pos = raf.getFilePointer();
+                raf.seek(tamPos + tam);
             }
         }
     }
@@ -105,26 +95,39 @@ public class MusicaService {
         String temp = raf.readLine();
         Musica resp = new Musica();
         String [] data = temp.split(",", 4);
-        resp.setTitulo(data[0]);
-        resp.setRank(Integer.parseInt(data[1]));
-        resp.setDataByString(data[2]);
-        String base = data[3];
+        if(temp.charAt(0) == '\"') {
+            temp = temp.substring(1);
+            data = temp.split("\"", 2);
+            resp.setTitulo(data[0]);
+            data = data[1].split(",", 4);
+            resp.setRank(Integer.parseInt(data[1]));
+            resp.setDataByString(data[2]);
+        }   else{
+            resp.setTitulo(data[0]);
+            resp.setRank(Integer.parseInt(data[1]));
+            resp.setDataByString(data[2]);
+        }
+        if(data[3].charAt(0) == '\"'){
+            data[3] = data[3].substring(1);
 
-        if(base.charAt(0) == '\"'){
-             base = base.substring(1);
-
-             data = base.split("\"", 2);
+             data = data[3].split("\"", 2);
 
              resp.setNome(data[0]);
 
              data = data[1].split(",", 3);
              resp.setRegiao(data[1]);
-             resp.setStreams(Integer.parseInt(data[2]));
+            if(data[2] == "")
+                resp.setStreams(0);
+            else
+                resp.setStreams(Integer.parseInt(data[2]));
         }
         else {
-            data = base.split(",", 3);
+            data = data[3].split(",", 3);
             resp.setNome(data[0]);
             resp.setRegiao(data[1]);
+            if(data[2] == "")
+                resp.setStreams(0);
+            else
             resp.setStreams(Integer.parseInt(data[2]));
         }
 
@@ -171,11 +174,33 @@ public class MusicaService {
         }
 
     }
-    protected Musica Read(int id) throws IOException {
-        return Read(id, 4);
+
+    protected Musica readMusica(int id) throws IOException {
+        long pos = 4;
+        raf.seek(pos);
+
+        while (raf.getFilePointer() < raf.length()) {
+             pos = raf.getFilePointer();
+            if (raf.readBoolean()) {
+                long actualPos = raf.getFilePointer();
+                int size = raf.readInt();
+                if (id == raf.readInt()) {
+                    return readFromFile(pos);
+                } else {
+                    raf.seek(actualPos + size);
+                    pos = raf.getFilePointer();
+                }
+            } else {
+                raf.seek(raf.getFilePointer() + raf.readInt());
+                pos = raf.getFilePointer();
+            }
+        }
+
+        return null;
     }
 
-    private Musica Read(int id, long pos) throws IOException {
+
+    /*private Musica readMusica(int id, long pos) throws IOException {
         raf.seek(pos);
         if(raf.getFilePointer() < raf.length()){
         if(raf.readBoolean()){
@@ -186,16 +211,16 @@ public class MusicaService {
             }
             else{
                 raf.seek(actualPos + size);
-                return Read(id,raf.getFilePointer());
+                return readMusica(id,raf.getFilePointer());
             }
         }else {
             raf.seek(raf.getFilePointer() + raf.readInt());
-            return Read(id, raf.getFilePointer());
+            return readMusica(id, raf.getFilePointer());
         }
         }else
             return null;
-    }
-    protected void deleteFromFile(int id) throws IOException {
+    }*/
+    protected void deleteMusica(int id) throws IOException {
         raf.seek(4);
         long pos = raf.getFilePointer(); // posicao da lapide
         boolean stop = true; // parada do while, achou e deletou o registro alvo, parou o loop
@@ -211,10 +236,13 @@ public class MusicaService {
                     raf.seek(posTam + tam);
                     pos = raf.getFilePointer();
                 }
+            } else {
+                raf.seek(raf.getFilePointer() + raf.readInt());
+                pos = raf.getFilePointer();
             }
         }
     }
-    public boolean createMusica(String fileName) throws IOException{
+    public Musica createMusica(String fileName) throws IOException{
 
 
         Scanner scanner = new Scanner(System.in);
@@ -250,6 +278,7 @@ public class MusicaService {
 
 
             writeInFile(raf.length(), tmp);
+            return tmp;
         }
         catch (Exception e)
         {
@@ -257,9 +286,89 @@ public class MusicaService {
             resp = false;
         }
 
-
-        return resp;
+        return null;
     }
+
+    protected void updateMusica(int id) throws ParseException, IOException {
+        Scanner scanner = new Scanner(System.in);
+        boolean resp = true;
+        String nome, titulo, regiao, data;
+        int  rank, streams;
+        System.out.println("------- ATUALIZAR MUSICA\n Digite o nome dos artistas: ");
+        nome = scanner.nextLine();
+        System.out.println("Digite o titulo da musica: ");
+        titulo = scanner.nextLine();
+        System.out.println("Digite a regiao da musica: ");
+        regiao = scanner.nextLine();
+        System.out.println("Digite a data da musica: ");
+        data = scanner.nextLine();
+        System.out.println("Digite o rank da musica: ");
+        rank = scanner.nextInt();
+        System.out.println("Digite quantas streams tem a musica: ");
+        streams = scanner.nextInt();
+        Musica temp = new Musica(false);
+        temp.setId(id);
+        temp.setTitulo(titulo);
+        temp.setRegiao(regiao);
+        temp.setNome(nome);
+        temp.setDataByString(data);
+        temp.setRank(rank);
+        temp.setStreams(streams);
+        updateMusica(temp);
+
+    }
+
+
+
+
+    private void updateMusica(Musica musica) throws IOException {
+            raf.seek(4);
+            long pos = raf.getFilePointer();
+            boolean parada = true;
+            while(pos < raf.length() && parada){
+                if(raf.readBoolean()){
+                    long posTam = raf.getFilePointer();
+                    int tamRegistro = raf.readInt();
+                    Musica temp = readFromFile(pos);
+                    if(musica.getId() == temp.getId()){
+                        if(getObjectSize(musica) == getObjectSize(temp)){
+                            writeInFile(pos, musica);
+                        } else if(getObjectSize(musica) < getObjectSize(temp)) {
+                            writeMusicaByTam(pos,musica, tamRegistro);
+
+                        } else{
+                            deleteMusica(musica.getId());
+                            writeInFile(raf.length(), musica);
+
+                        }
+                        parada = false;
+                    }
+                    pos = posTam + tamRegistro;
+                    raf.seek(pos);
+
+                } else{
+                    pos = raf.getFilePointer() + raf.readInt();
+                    raf.seek(pos);
+                }
+
+            }
+
+    }
+    private void writeMusicaByTam(long pos, Musica musica, int tam) throws IOException {
+            raf.seek(pos);
+            raf.writeBoolean(true);
+            raf.writeInt(tam);
+            raf.writeInt(musica.getId());
+            raf.writeUTF(musica.getTitulo());
+            raf.writeUTF(musica.getNome());
+            raf.writeLong(musica.getData().getTime());
+            raf.writeInt(musica.getRank());
+            raf.writeInt(musica.getStreams());
+            // Escrever os dados de texto (nome e região) como strings, limitando a regiao a somente 3 caracteres(String fixa)
+            String temp = musica.getRegiao().substring(0,Math.min(3, musica.getRegiao().length()));
+            byte [] substring = temp.getBytes();
+            raf.write(substring);
+        }
 
 
 
