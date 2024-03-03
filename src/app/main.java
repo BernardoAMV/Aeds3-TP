@@ -20,7 +20,8 @@ public class main {
         long posBD = 4;
         int id;
 
-        System.out.println("Olá usuário! Por favor, tecle 1 para carregar o arquivo binário com os registros, caso ja tenha carregado tecle 2");
+        System.out.println("Olá usuário! " +
+                "Por favor, tecle 1 para carregar o arquivo binário com os registros, caso ja tenha carregado tecle 2");
         int escolha = scanner.nextInt();
 
                 if(escolha == 1) {
@@ -46,7 +47,7 @@ public class main {
                             escolha = scanner.nextInt();
                             switch (escolha) {
                                 case 1:
-                                    System.out.println(serviceDB.toString(serviceDB.createMusica("DB/teste.db")));
+                                    System.out.println(serviceDB.toString(serviceDB.createMusica()));
                                     break;
 
                                 case 2:

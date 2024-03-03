@@ -25,7 +25,7 @@ public class Musica{
         if(temp.file.length() > 0)
             this.id = temp.raf.readInt() + 1;
         else
-            this.id = 1;
+            this.id = 14;
 
         temp.raf.seek(0);
         temp.raf.writeInt(this.id);
@@ -59,7 +59,7 @@ public class Musica{
         data = new Date();
     }
 
-    public Musica(boolean vazio){}
+    public Musica(boolean vazio){} // construtor vazio, em alguns casos tivemos que criar uma musica, mas sem capturar o id do arquivo, ai criamos esse construtor vazio
 
     // getters e setters
 

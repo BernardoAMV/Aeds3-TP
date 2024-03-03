@@ -5,11 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1bfe9e50-a0c8-4876-9a31-67f108340cae" name="Changes" comment="correcoes">
-      <change beforePath="$PROJECT_DIR$/.idea/Aeds3 - TP.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Aeds3 - TP.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db/csv_teste.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/db/database.bin" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/Musica.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Musica.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/service/MusicaService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/MusicaService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -36,29 +36,29 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.Main.executor": "Debug",
-    "Application.main.executor": "Run",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "main",
-    "jdk.selected.JAVA_MODULE": "openjdk-21",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/home/bernardo/IdeaProjects/Aeds3-TP/DB",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "onboarding.tips.debug.path": "/home/bernardo/IdeaProjects/AEDS3/src/Main.java",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.0",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.Main.executor&quot;: &quot;Debug&quot;,
+    &quot;Application.main.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;openjdk-21&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/bernardo/IdeaProjects/Aeds3-TP/DB&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;onboarding.tips.debug.path&quot;: &quot;/home/bernardo/IdeaProjects/AEDS3/src/Main.java&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/DB" />
@@ -133,7 +133,8 @@
       <workItem from="1709321941446" duration="727000" />
       <workItem from="1709323000627" duration="3109000" />
       <workItem from="1709389243656" duration="2587000" />
-      <workItem from="1709400727628" duration="19405000" />
+      <workItem from="1709400727628" duration="20783000" />
+      <workItem from="1709470562131" duration="3139000" />
     </task>
     <task id="LOCAL-00001" summary="adicionando base de dados binario">
       <option name="closed" value="true" />
@@ -181,7 +182,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/service/MusicaService.java</url>
-          <line>54</line>
+          <line>55</line>
           <properties class="MusicaService" method="readFromFile">
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />
@@ -190,8 +191,8 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/service/MusicaService.java</url>
-          <line>323</line>
-          <properties class="MusicaService">
+          <line>297</line>
+          <properties class="MusicaService" method="updateMusica">
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />
           </properties>
@@ -199,7 +200,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/service/MusicaService.java</url>
-          <line>72</line>
+          <line>73</line>
           <properties class="MusicaService" method="readAll">
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />
@@ -208,7 +209,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/service/MusicaService.java</url>
-          <line>222</line>
+          <line>203</line>
           <properties class="MusicaService" method="deleteMusica">
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />
@@ -217,37 +218,32 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/service/MusicaService.java</url>
-          <line>318</line>
+          <line>292</line>
           <option name="timeStamp" value="17" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/service/MusicaService.java</url>
-          <line>355</line>
+          <line>329</line>
           <option name="timeStamp" value="19" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/service/MusicaService.java</url>
-          <line>316</line>
+          <line>290</line>
           <option name="timeStamp" value="20" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/service/MusicaService.java</url>
-          <line>221</line>
-          <option name="timeStamp" value="22" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/service/MusicaService.java</url>
-          <line>87</line>
+          <line>88</line>
           <option name="timeStamp" value="30" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/service/MusicaService.java</url>
-          <line>339</line>
+          <line>313</line>
           <option name="timeStamp" value="31" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/service/MusicaService.java</url>
-          <line>243</line>
+          <line>224</line>
           <option name="timeStamp" value="33" />
         </line-breakpoint>
       </breakpoints>
