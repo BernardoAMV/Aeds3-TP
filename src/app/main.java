@@ -13,7 +13,7 @@ public class main {
 
         MusicaService serviceDB = new MusicaService("DB/teste.db");
 
-        MusicaService serviceCSV = new MusicaService("DB/csv_teste_tratado**.csv");
+        MusicaService serviceCSV = new MusicaService("DB/csv_teste_tratado.csv");
         Scanner scanner = new Scanner(System.in);
         serviceCSV.raf.readLine();
         long posCSV = serviceCSV.raf.getFilePointer();

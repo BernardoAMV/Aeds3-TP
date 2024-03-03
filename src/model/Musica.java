@@ -17,7 +17,8 @@ public class Musica{
         this.rank = rank;
         this.streams = streams;
         this.nome = nome;
-        this.regiao = regiao;
+        String pad = "   ";
+        this.regiao = (regiao + pad).substring(0,3);
         this.titulo = titulo;
         MusicaService temp = new MusicaService("DB/teste.db");
 
@@ -54,7 +55,8 @@ public class Musica{
         temp.raf.seek(0);
         temp.raf.writeInt(this.id);
         this.nome ="";
-        this.regiao = "";
+        String pad = "   ";
+        this.regiao = (regiao + pad).substring(0,3);
         this.streams = 0;
         data = new Date();
     }
@@ -123,7 +125,8 @@ public class Musica{
     }
 
     public void setRegiao(String regiao) {
-        this.regiao = regiao;
+        String pad = "   ";
+        this.regiao = (regiao + pad).substring(0,3);
     }
 
 

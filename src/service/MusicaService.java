@@ -162,7 +162,7 @@ public class MusicaService {
 
 
    public String toString(Musica musica){ // metodo simples, apenas para transformar os atributos do objeto musica em uma string
-       SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+       SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
         if(musica != null) {
             return "\nID: " + musica.getId() +
                     "\nNome: " + musica.getNome() +
